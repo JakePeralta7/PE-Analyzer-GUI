@@ -19,3 +19,4 @@ ARCH_MSG = "This is a {}-bit binary"
 EXPORT_BTN = "Export report"
 SECTION_ATTRIBUTES = ["Entropy", "VirtualSize", "VirtualAddress", "SizeOfRawData",
                       "PointerToRawData", "Characterisitcs"]
+MIN_AMOUNT_OF_CHARS = 5

@@ -7,12 +7,13 @@ from random import choice
 from const import *
 
 
-class Executable:
+class PE:
     def __init__(self, path):
         self.path = path
         self.pe = pefile.PE(self.path)
         self.hashes = {}
         self.imports = {}
+        self.headers = {}
         self.exports = []
         self.strings = []
         self.characteristics = ""
@@ -22,7 +23,10 @@ class Executable:
         self.warnings = self.pe.get_warnings()
         self.name = os.path.basename(self.path)
         self.strings_file = f"{self.name.split('.')[0]}_strings.txt"
-        self.scan_virus_total()
+        try:
+            self.scan_virus_total()
+        except requests.exceptions.ConnectionError:
+            pass
 
         # Check if it is a 32-bit or 64-bit binary
         if hex(self.pe.FILE_HEADER.Machine) == THIRTY_TWO_BIT:
@@ -62,19 +66,17 @@ class Executable:
             ]
 
     def get_imports_exports(self):
-        try:
+        if hasattr(self.pe, "DIRECTORY_ENTRY_IMPORT"):
             for entry in self.pe.DIRECTORY_ENTRY_IMPORT:
                 self.imports[f"{entry.dll.decode()} ({len(entry.imports)})"] = \
                     [function.name.decode() for function in entry.imports]
-        except AttributeError:
-            pass
-        try:
+        if hasattr(self.pe, "DIRECTORY_ENTRY_EXPORT"):
             self.exports = [exp.name.decode('utf-8') for exp in self.pe.DIRECTORY_ENTRY_EXPORT.symbols]
-        except AttributeError:
+        else:
             self.exports.append("The PE doesn't export anything")
 
     def get_strings(self):
-        command = f'strings -nobanner "{self.path}" > {self.strings_file}'
+        command = f'strings -nobanner -n {MIN_AMOUNT_OF_CHARS} "{self.path}" > {self.strings_file}'
         os.system(command)
         with open(self.strings_file, "r") as strings_file:
             self.strings = strings_file.read().splitlines()
@@ -91,12 +93,22 @@ class Executable:
         self.characteristics = f"Characteristics: {', '.join(types)}"
 
     def get_resources(self):
-        try:
+        if hasattr(self.pe, "DIRECTORY_ENTRY_RESOURCE"):
             for entry in self.pe.DIRECTORY_ENTRY_RESOURCE.entries:
                 directory = entry.directory
-                print(entry)
-        except AttributeError:
-            pass
+                print(directory)
+
+    def get_headers(self):
+        self.headers = {
+            "DOS_HEADER": self.pe.DOS_HEADER,
+            "NT_HEADERS": self.pe.NT_HEADERS,
+            "FILE_HEADERS": self.pe.FILE_HEADER,
+            "OPTIONAL_HEADER": self.pe.OPTIONAL_HEADER
+        }
+
+    def __repr__(self):
+        return f"""Name: {self.name}
+"""
 
 
 def write_report(pe):
@@ -115,7 +127,7 @@ def write_report(pe):
 def analyzer(pe_path):
 
     # Initializing the PE obj
-    pe = Executable(pe_path)
+    pe = PE(pe_path)
 
     # General Tab
     general_tab_layout = [[sg.Text(pe.virus_total_result)]]
