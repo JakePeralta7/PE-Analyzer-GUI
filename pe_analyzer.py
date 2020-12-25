@@ -16,8 +16,7 @@ class Executable:
         self.exports = []
         self.strings = []
         self.characteristics = ""
-        self.sections = {"Section Name": ["Entropy", "VirtualSize", "VirtualAddress", "SizeOfRawData",
-                                          "PointerToRawData", "Characterisitcs"]}
+        self.sections = {"Section Name": SECTION_ATTRIBUTES}
         self.repr_hashes = ""
         self.virus_total_result = ""
         self.warnings = self.pe.get_warnings()

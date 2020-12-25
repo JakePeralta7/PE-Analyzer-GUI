@@ -17,3 +17,5 @@ THIRTY_TWO_BIT = '0x14c'
 RESULT_FORMAT = "VirusTotal: {} out of {} engines detected this file as a virus"
 ARCH_MSG = "This is a {}-bit binary"
 EXPORT_BTN = "Export report"
+SECTION_ATTRIBUTES = ["Entropy", "VirtualSize", "VirtualAddress", "SizeOfRawData",
+                      "PointerToRawData", "Characterisitcs"]
