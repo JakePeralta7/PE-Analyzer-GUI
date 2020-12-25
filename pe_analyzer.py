@@ -165,11 +165,11 @@ def analyzer(pe_path):
     strings_column = [[sg.Column(strings_tab_layout, scrollable=True, vertical_scroll_only=True)]]
 
     tab_group_layout = [
-        [sg.Tab("General", general_tab_layout)],
-        [sg.Tab("Imports", imports_layout)],
-        [sg.Tab("Exports", exports_column)],
-        [sg.Tab("Sections", sections_tab_layout)],
-        [sg.Tab("Strings", strings_column)]
+        [sg.Tab(GENERAL_TAB, general_tab_layout)],
+        [sg.Tab(IMPORTS_TAB, imports_layout)],
+        [sg.Tab(EXPORTS_TAB, exports_column)],
+        [sg.Tab(SECTIONS_TAB, sections_tab_layout)],
+        [sg.Tab(STRINGS_TAB, strings_column)]
     ]
 
     layout = [
@@ -197,7 +197,7 @@ def main():
     sg.change_look_and_feel(choice(APP_STYLE))
 
     layout = [
-        [sg.Text("Insert PE path:"), sg.InputText()],
+        [sg.Text(ENTER_PATH), sg.InputText()],
         [sg.Submit(), sg.Cancel()]
     ]
 
@@ -209,16 +209,16 @@ def main():
         if event in (None, 'Exit'):
             break
 
-        if event == "Submit":
+        if event == SUBMIT_BTN:
             try:
                 pe_path = values[0]
                 if os.path.isfile(pe_path):
                     window.close()
                     analyzer(pe_path)
                 else:
-                    sg.Popup("The path you entered is invalid!")
+                    sg.Popup(INVALID_PATH)
             except KeyError:
-                sg.Popup("You didn't enter a path")
+                sg.Popup(EMPTY_PATH)
 
     window.close()
 
