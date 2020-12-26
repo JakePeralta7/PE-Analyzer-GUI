@@ -204,7 +204,7 @@ def main():
     window = sg.Window(TITLE, layout)
 
     while True:
-        event, values = window.read()
+        event, values = window.Read()
 
         if event in (None, 'Exit'):
             break
@@ -213,14 +213,14 @@ def main():
             try:
                 pe_path = values[0]
                 if os.path.isfile(pe_path):
-                    window.close()
+                    window.Close()
                     analyzer(pe_path)
                 else:
                     sg.Popup(INVALID_PATH)
             except KeyError:
                 sg.Popup(EMPTY_PATH)
 
-    window.close()
+    window.Close()
 
 
 if __name__ == '__main__':
