@@ -107,8 +107,8 @@ class PE:
         }
 
     def __repr__(self):
-        return f"""Name: {self.name}
-"""
+        # TODO Add representation to the class
+        return ""
 
 
 def write_report(pe):
@@ -171,44 +171,35 @@ def analyzer(pe_path):
         [sg.Tab(SECTIONS_TAB, sections_tab_layout)],
         [sg.Tab(STRINGS_TAB, strings_column)]
     ]
-
     layout = [
         [sg.Text(f"{pe.name} ({pe.path})"), sg.Button(EXPORT_BTN)],
         [sg.TabGroup(tab_group_layout, enable_events=True)]
     ]
-
     window = sg.Window(TITLE, layout)
     window.Finalize()
     window.Maximize()
 
     while True:
         event, values = window.read()
-
         if event in (None, 'Exit'):
             break
-
-        if event == EXPORT_BTN:
+        elif event == EXPORT_BTN:
             write_report(pe)
-
     window.Close()
 
 
 def main():
     sg.change_look_and_feel(choice(APP_STYLE))
-
     layout = [
         [sg.FileBrowse(key=FILE_KEY), sg.Submit()]
     ]
-
     window = sg.Window(TITLE, layout)
-
     while True:
         event, values = window.Read()
 
         if event in (None, 'Exit'):
             break
-
-        if event == SUBMIT_BTN:
+        elif event == SUBMIT_BTN:
             try:
                 pe_path = values[FILE_KEY]
                 if os.path.isfile(pe_path):
