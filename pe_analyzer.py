@@ -197,8 +197,7 @@ def main():
     sg.change_look_and_feel(choice(APP_STYLE))
 
     layout = [
-        [sg.Text(ENTER_PATH), sg.InputText()],
-        [sg.Submit(), sg.Cancel()]
+        [sg.FileBrowse(key=FILE_KEY), sg.Submit()]
     ]
 
     window = sg.Window(TITLE, layout)
@@ -211,7 +210,7 @@ def main():
 
         if event == SUBMIT_BTN:
             try:
-                pe_path = values[0]
+                pe_path = values[FILE_KEY]
                 if os.path.isfile(pe_path):
                     window.Close()
                     analyzer(pe_path)
