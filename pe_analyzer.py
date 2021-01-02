@@ -107,8 +107,7 @@ class PE:
         }
 
     def __repr__(self):
-        # TODO Add representation to the class
-        return ""
+        return self.pe.parse_version_information()
 
 
 def write_report(pe):
@@ -133,8 +132,13 @@ def analyzer(pe_path):
     general_tab_layout = [[sg.Text(pe.virus_total_result)]]
     general_tab_layout += [[sg.Text(hash_type, size=(10, 1)), sg.Text(value)] for hash_type, value in pe.hashes.items()]
     general_tab_layout += [[sg.Text(pe.architecture)], [sg.Text(pe.time_stamp)], [sg.Text(pe.characteristics)]]
+
+    # IOCs Tab
     if pe.warnings:
-        general_tab_layout += [[sg.Text("Warnings")] + [sg.Text(warning) for warning in pe.warnings]]
+        ioc_tab_layout = [[sg.Text("Warnings")]]
+        ioc_tab_layout += [[sg.Text(warning)] for warning in pe.warnings]
+    else:
+        ioc_tab_layout = [[sg.Text("No IOCs found")]]
 
     # Imports Tab
     imports_layout = []
@@ -169,7 +173,8 @@ def analyzer(pe_path):
         [sg.Tab(IMPORTS_TAB, imports_layout)],
         [sg.Tab(EXPORTS_TAB, exports_column)],
         [sg.Tab(SECTIONS_TAB, sections_tab_layout)],
-        [sg.Tab(STRINGS_TAB, strings_column)]
+        [sg.Tab(STRINGS_TAB, strings_column)],
+        [sg.Tab(IOC_TAB, ioc_tab_layout)]
     ]
     layout = [
         [sg.Text(f"{pe.name} ({pe.path})"), sg.Button(EXPORT_BTN)],

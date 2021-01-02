@@ -17,6 +17,7 @@ IMPORTS_TAB = "Imports"
 EXPORTS_TAB = "Exports"
 SECTIONS_TAB = "Sections"
 STRINGS_TAB = "Strings"
+IOC_TAB = "IOCs"
 
 # URLs
 SCAN_URL = "https://www.virustotal.com/vtapi/v2/file/scan"
