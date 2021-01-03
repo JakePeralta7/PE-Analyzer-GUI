@@ -3,7 +3,7 @@ import PySimpleGUI as sg
 import os
 import random
 from const import *
-from PE import PE
+from pe import PE
 
 
 def write_report(pe):
