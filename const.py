@@ -2,8 +2,11 @@
 TITLE = "PE Analyzer"
 APP_STYLE = ["DarkAmber"]
 TEXT_COLOR = 'black'
+
+# Keys
 API_KEY = "da4d5c34d4d8eed5a184317e91308ce7e66e846d52eebb5a91b36d5cfb964870"
 FILE_KEY = "-file-"
+FOLDER_KEY = "-folder-"
 
 # Buttons
 CLEAR_BTN = "Clear"
