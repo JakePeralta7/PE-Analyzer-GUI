@@ -1,6 +1,6 @@
 # App constants
 TITLE = "PE Analyzer"
-APP_STYLE = ["DarkAmber"]
+APP_STYLE = ["DarkAmber", "GreenMono", "BrightColors"]
 TEXT_COLOR = 'black'
 
 # Keys

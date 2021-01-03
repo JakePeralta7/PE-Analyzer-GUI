@@ -83,7 +83,7 @@ def analyzer(pe_path):
     ]
 
     # Initializing the window
-    window = sg.Window(TITLE, layout, size=(900, 600))
+    window = sg.Window(TITLE, layout, size=(1000, 600))
     window.Finalize()
 
     # Make the window full size
