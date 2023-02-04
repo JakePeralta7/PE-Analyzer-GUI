@@ -27,7 +27,7 @@ class PE:
         self.time_stamp = f"TimeDateStamp: {self.pe.FILE_HEADER.dump_dict()['TimeDateStamp']['Value'].split('[')[1][:-1]}"
 
         # Functions
-        self.scan_virus_total()
+        #self.scan_virus_total()
         self.get_sections()
         self.get_imports_exports()
         self.get_strings()
